@@ -1,0 +1,31 @@
+GET http://localhost:3000/api
+
+### 
+GET http://localhost:3000/api/butterflies
+
+### 
+GET http://localhost:3000/api/butterflies/Hq4Rk_vOPMehRX2ar6LKX
+
+###
+POST http://localhost:3000/api/butterflies
+content-Type: application/json
+
+{
+  "commonName": "Monarch Butterfly",
+  "species": "Danaus plexippus",
+  "article": "https://en.wikipedia.org/wiki/Monarch_butterfly"
+}
+
+### 
+GET http://localhost:3000/api/users
+
+### 
+GET http://localhost:3000/api/users/-9aAFuyNIkpSzRMNux2BQ
+
+###
+POST http://localhost:3000/api/users
+content-Type: application/json
+
+{
+  "username": "johndoe",
+}
