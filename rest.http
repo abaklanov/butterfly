@@ -31,6 +31,8 @@ GET http://localhost:3000/api/users
 ### 
 GET http://localhost:3000/api/users/-9aAFuyNIkpSzRMNux2BQ
 
+### 
+GET http://localhost:3000/api/users/-9aAFuyNIkpSzRMNux2BQ/ratings
 ###
 POST http://localhost:3000/api/users
 content-Type: application/json

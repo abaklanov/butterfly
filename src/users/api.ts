@@ -41,6 +41,26 @@ const usersApi: Fastify.FastifyPluginCallback = function (
     reply.status(201).send(newUser);
   });
 
+  fastify.get<{
+    Params: {
+      id: string;
+    };
+  }>('/api/users/:id/ratings', async function (request, reply) {
+    const user = await fastify.prisma.users.findFirst({
+      where: { id: request.params.id },
+      include: {
+        ratings: {
+          select: {
+            id: true,
+            rating: true,
+            butterfly: true,
+          },
+        },
+      },
+    });
+    reply.send(user);
+  });
+
   done();
 };
 
