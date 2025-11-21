@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import Fastify from 'fastify';
-import butterfliesApi from './api.js';
+import butterfliesRoutes from './routes.js';
 import prismaPlugin from '../../prisma/prismaPlugin.js';
 
 let fastify;
@@ -12,7 +12,7 @@ beforeAll(() => {
     logger: false,
   });
   fastify.register(prismaPlugin);
-  fastify.register(butterfliesApi);
+  fastify.register(butterfliesRoutes);
   fastify.listen({ port: 3000 }, function (err) {
     if (err) {
       fastify.log.error(err);
