@@ -6,6 +6,8 @@ import prismaPlugin from '../../prisma/prismaPlugin.js';
 let fastify;
 
 beforeAll(() => {
+  console.log(process.env.DATABASE_URL);
+
   fastify = Fastify({
     logger: false,
   });
