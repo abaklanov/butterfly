@@ -6,11 +6,9 @@ const butterfliesApi: Fastify.FastifyPluginCallback = function (
   _options,
   done,
 ) {
-  fastify.get('/api/butterflies', function (_request, reply) {
-    // console.log(fastify.db.data);
-    // const butterflies = fastify.db.data.butterflies || [];
-
-    reply.send({ butterflies: {} });
+  fastify.get('/api/butterflies', async function (_request, reply) {
+    const butterflies = await fastify.prisma.butterflies.findMany();
+    reply.send(butterflies);
   });
 
   fastify.get<{

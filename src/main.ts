@@ -1,16 +1,19 @@
 import Fastify from 'fastify';
 import butterfliesApi from './butterflies/api.js';
 import usersApi from './users/api.js';
+import prismaPlugin from '../prisma/prismaPlugin.js';
 
 const fastify = Fastify({
   logger: true,
 });
 
+fastify.register(prismaPlugin);
+
 fastify.register(butterfliesApi);
 fastify.register(usersApi);
 
 fastify.get('/', async function () {
-  return { hello: 'world' };
+  return { hello: 'suka' };
 });
 
 // TODO: use env variable for port

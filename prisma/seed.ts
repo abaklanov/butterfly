@@ -4,6 +4,7 @@ console.log('Seeding database...');
 
 async function main() {
   console.log('Creating users...');
+  // TODO: Any bulk methods instead of upsert one-by-one?
   const user1 = await prisma.users.upsert({
     where: { username: 'iluvbutterflies' },
     update: {},
