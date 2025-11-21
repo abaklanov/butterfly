@@ -7,9 +7,10 @@ const usersApi: Fastify.FastifyPluginCallback = function (
   done,
 ) {
   // Declare a route
-  fastify.get('/api/users', function (_request, reply) {
+  fastify.get('/api/users', async function (_request, reply) {
     // TODO: validate request
-    reply.send({ users: ['John', 'Jack', 'Jill'] });
+    const users = await fastify.prisma.users.findMany();
+    reply.send(users);
   });
 
   fastify.get<{
