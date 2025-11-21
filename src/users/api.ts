@@ -17,18 +17,20 @@ const usersApi: Fastify.FastifyPluginCallback = function (
     Params: {
       id: string;
     };
-  }>('/api/users/:id', function (_request, reply) {
-    // const users = fastify.db.data.users || [];
-    // const user = users.find((user) => user.id === request.params.id);
+  }>('/api/users/:id', async function (request, reply) {
+    // TODO: validate request params
     // TODO: handle not found
-    reply.send({ user: {} });
+    const user = await fastify.prisma.users.findFirst({
+      where: { id: request.params.id },
+    });
+    reply.send(user);
   });
 
   fastify.post<{
     Body: {
       username: string;
     };
-  }>('/api/users', function (request, reply) {
+  }>('/api/users', async function (request, reply) {
     // TODO: validate request body and return proper response
     // TODO: avoid duplicate usernames
     // TODO: validate username rules (e.g. length, characters)
@@ -36,10 +38,8 @@ const usersApi: Fastify.FastifyPluginCallback = function (
       id: nanoid(),
       ...request.body,
     };
-    // fastify.db.data.users.push(newUser);
-
-    // fastify.db.write();
-    reply.status(201).send({ user: newUser });
+    await fastify.prisma.users.create({ data: newUser });
+    reply.status(201).send(newUser);
   });
 
   done();
