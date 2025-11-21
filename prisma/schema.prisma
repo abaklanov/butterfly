@@ -13,14 +13,14 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
+model Users {
   id        String     @id 
   username  String  @unique
 }
 
 model Butterflies {
   id            String     @id 
-  common_name   String
+  commonName    String
   species       String
   article       String
 }

@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "User" (
+CREATE TABLE "Users" (
     "id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
 
@@ -9,7 +9,7 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Butterflies" (
     "id" TEXT NOT NULL,
-    "common_name" TEXT NOT NULL,
+    "commonName" TEXT NOT NULL,
     "species" TEXT NOT NULL,
     "article" TEXT NOT NULL,
 
@@ -17,4 +17,4 @@ CREATE TABLE "Butterflies" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+CREATE UNIQUE INDEX "User_username_key" ON "Users"("username");
