@@ -26,6 +26,7 @@ describe('butterflies API', () => {
         method: 'GET',
         url: '/api/butterflies',
       });
+      console.log(response.body);
       expect(response.statusCode).toBe(200);
       expect(JSON.parse(response.body).length).toBeGreaterThan(0);
     });
