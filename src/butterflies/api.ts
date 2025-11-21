@@ -15,13 +15,13 @@ const butterfliesApi: Fastify.FastifyPluginCallback = function (
     Params: {
       id: string;
     };
-  }>('/api/butterflies/:id', function (_request, reply) {
-    // const butterflies = fastify.db.data.butterflies || [];
-    // const butterfly = butterflies.find(
-    //   (butterfly) => butterfly.id === request.params.id,
-    // );
+  }>('/api/butterflies/:id', async function (request, reply) {
+    // TODO: validate request params
     // TODO: handle not found
-    reply.send({ butterfly: {} });
+    const butterfly = await fastify.prisma.butterflies.findFirst({
+      where: { id: request.params.id },
+    });
+    reply.send(butterfly);
   });
 
   fastify.post<{
@@ -30,17 +30,16 @@ const butterfliesApi: Fastify.FastifyPluginCallback = function (
       species: string;
       article: string;
     };
-  }>('/api/butterflies', function (request, reply) {
+  }>('/api/butterflies', async function (request, reply) {
     // TODO: validate request body and return proper response
     // TODO: validate data (e.g. non-empty strings, length limits, valid URL for article)
     const newButterfly = {
       id: nanoid(),
       ...request.body,
     };
-    // fastify.db.data.butterflies.push(newButterfly);
+    await fastify.prisma.butterflies.create({ data: newButterfly });
 
-    // fastify.db.write();
-    reply.status(201).send({ butterfly: newButterfly });
+    reply.status(201).send(newButterfly);
   });
 
   done();
