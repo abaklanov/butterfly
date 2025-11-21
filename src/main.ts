@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import butterfliesRoutes from './butterflies/routes.js';
-import usersApi from './users/api.js';
+import usersRoutes from './users/routes.js';
 import prismaPlugin from '../prisma/prismaPlugin.js';
 
 const fastify = Fastify({
@@ -10,7 +10,7 @@ const fastify = Fastify({
 fastify.register(prismaPlugin);
 
 fastify.register(butterfliesRoutes);
-fastify.register(usersApi);
+fastify.register(usersRoutes);
 
 fastify.get('/', async function () {
   return { hello: 'suka' };
