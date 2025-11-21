@@ -42,6 +42,28 @@ const butterfliesApi: Fastify.FastifyPluginCallback = function (
     reply.status(201).send(newButterfly);
   });
 
+  fastify.post<{
+    Params: {
+      id: string;
+    };
+    Body: {
+      userId: string;
+      rating: number;
+    };
+  }>('/api/butterflies/:id/ratings', async function (request, reply) {
+    // TODO: validate request params
+    // TODO: validate request body and return proper response
+    // TODO: validate data (e.g. rating range, existing userId and butterflyId)
+    const newRating = {
+      id: nanoid(),
+      butterflyId: request.params.id,
+      ...request.body,
+    };
+    await fastify.prisma.ratings.create({ data: newRating });
+
+    reply.status(201).send(newRating);
+  });
+
   done();
 };
 

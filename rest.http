@@ -16,6 +16,15 @@ content-Type: application/json
   "article": "https://en.wikipedia.org/wiki/Monarch_butterfly"
 }
 
+###
+POST http://localhost:3000/api/butterflies/Hq4Rk_vOPMehRX2ar6LKX/ratings
+content-Type: application/json
+
+{
+  "userId": "-9aAFuyNIkpSzRMNux2BQ",
+  "rating": 5
+}
+
 ### 
 GET http://localhost:3000/api/users
 

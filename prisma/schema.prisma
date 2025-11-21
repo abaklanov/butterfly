@@ -16,6 +16,8 @@ datasource db {
 model Users {
   id        String     @id 
   username  String  @unique
+
+  ratings   Ratings[]
 }
 
 model Butterflies {
@@ -23,4 +25,16 @@ model Butterflies {
   commonName    String
   species       String
   article       String
+
+  ratings       Ratings[]
+}
+
+model Ratings {
+  id            String  @id
+  userId        String
+  butterflyId   String
+  rating        Int
+
+  user          Users  @relation(fields: [userId], references: [id])
+  butterfly     Butterflies  @relation(fields: [butterflyId], references: [id])
 }
