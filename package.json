@@ -39,7 +39,7 @@
     "prettier:check": "prettier \"{src,__{tests}__}/**/*.{ts,mts}\" --config .prettierrc --check",
     "test:watch": "vitest unit",
     "db:migrate": "prisma migrate dev",
-    "db:seed": "tsc -t es2017 --moduleResolution node16 --module Node16 prisma/seed.ts && node prisma/seed.js"
+    "db:seed": "prisma db seed"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
