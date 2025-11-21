@@ -24,6 +24,14 @@ content-Type: application/json
   "userId": "-9aAFuyNIkpSzRMNux2BQ",
   "rating": 5
 }
+###
+POST http://localhost:3000/api/butterflies/VJ5v4ZEQVL92XaaSl7xgD/ratings
+content-Type: application/json
+
+{
+  "userId": "-9aAFuyNIkpSzRMNux2BQ",
+  "rating": 3
+}
 
 ### 
 GET http://localhost:3000/api/users

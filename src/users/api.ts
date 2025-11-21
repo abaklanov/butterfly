@@ -50,6 +50,7 @@ const usersApi: Fastify.FastifyPluginCallback = function (
       where: { id: request.params.id },
       include: {
         ratings: {
+          orderBy: { rating: 'desc' },
           select: {
             id: true,
             rating: true,
