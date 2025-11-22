@@ -96,7 +96,16 @@ describe('butterflies API', () => {
       });
       expect(response.statusCode).toBe(400);
     });
+
+    it('returns 404 for not found', async () => {
+      const response = await fastify.inject({
+        method: 'GET',
+        url: '/api/butterflies/nonexistentid',
+      });
+      expect(response.statusCode).toBe(404);
+    });
   });
+
   describe('POST /api/butterflies', () => {
     it('creates a butterfly', async () => {
       const response = await fastify.inject({
@@ -111,6 +120,19 @@ describe('butterflies API', () => {
       expect(response.statusCode).toBe(201);
       const butterfly = JSON.parse(response.body);
       expect(butterfly.commonName).toBe('Monarch Butterfly');
+    });
+
+    it('returns 400 for invalid data', async () => {
+      const response = await fastify.inject({
+        method: 'POST',
+        url: '/api/butterflies',
+        payload: {
+          commonName: '',
+          species: 'Danaus plexippus',
+          article: 'not-a-valid-url',
+        },
+      });
+      expect(response.statusCode).toBe(400);
     });
   });
   describe('POST /api/butterflies/:id/ratings', () => {

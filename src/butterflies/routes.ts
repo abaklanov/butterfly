@@ -24,7 +24,20 @@ const butterfliesRoutes: Fastify.FastifyPluginCallback = function (
       },
     },
   });
-  fastify.post('/api/butterflies', handleCreateButterfly);
+  fastify.post('/api/butterflies', {
+    handler: handleCreateButterfly,
+    schema: {
+      body: {
+        type: 'object',
+        properties: {
+          commonName: { type: 'string', minLength: 1 },
+          species: { type: 'string', minLength: 1 },
+          article: { type: 'string', format: 'uri' },
+        },
+        required: ['commonName', 'species', 'article'],
+      },
+    },
+  });
   fastify.post('/api/butterflies/:id/ratings', handleAddButterflyRating);
 
   done();

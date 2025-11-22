@@ -12,9 +12,11 @@ export const handleGetButterfly = async function (_request, reply) {
 };
 
 export const handleGetButterflyById = async function (request, reply) {
-  // TODO: validate request params
-  // TODO: handle not found
   const butterfly = await fetchButterflyById.call(this, request.params.id);
+  if (!butterfly) {
+    reply.status(404).send({ message: 'Butterfly not found' });
+    return;
+  }
   reply.send(butterfly);
 };
 
