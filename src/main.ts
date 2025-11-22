@@ -19,9 +19,12 @@ fastify.get('/health-check', async function () {
 
 // TODO: use env variable for port and address
 // TODO: separate server from app
-fastify.listen({ port: 3000, host: '0.0.0.0' }, function (err) {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-});
+fastify.listen(
+  { port: +process.env.SERVER_PORT, host: process.env.SERVER_HOST },
+  function (err) {
+    if (err) {
+      fastify.log.error(err);
+      process.exit(1);
+    }
+  },
+);
