@@ -15,9 +15,6 @@ beforeAll(async () => {
   await fastify.register(prismaPlugin);
   fastify.register(butterfliesRoutes);
 
-  await fastify.prisma.butterflies.deleteMany({});
-  await fastify.prisma.users.deleteMany({});
-
   fastify.listen({ port: process.env.SERVER_PORT }, function (err) {
     if (err) {
       fastify.log.error(err);
@@ -26,13 +23,13 @@ beforeAll(async () => {
   });
 });
 
-afterEach(async () => {
-  // Clean up database after each test if needed
-  await fastify.prisma.butterflies.deleteMany({});
-  await fastify.prisma.users.deleteMany({});
-});
-
 describe('butterflies API', () => {
+  beforeAll(async () => {
+    await fastify.prisma.butterflies.deleteMany({});
+  });
+  afterEach(async () => {
+    await fastify.prisma.butterflies.deleteMany({});
+  });
   describe('GET /api/butterflies', () => {
     it('returns the list of butterflies ', async () => {
       await fastify.prisma.butterflies.createMany({
@@ -55,13 +52,14 @@ describe('butterflies API', () => {
         method: 'GET',
         url: '/api/butterflies',
       });
-      console.log(response.body);
       expect(response.statusCode).toBe(200);
       const butterflies = JSON.parse(response.body);
       expect(butterflies.length).toBe(2);
       expect(butterflies[1].commonName).toBe('Swallowtail Butterfly');
     });
+  });
 
+  describe('GET /api/butterflies/:id', () => {
     it('returns a butterfly', async () => {
       const response = await fastify.inject({
         method: 'GET',
@@ -70,6 +68,39 @@ describe('butterflies API', () => {
       expect(response.statusCode).toBe(200);
       const butterfly = JSON.parse(response.body);
       expect(butterfly.commonName).toBe('Monarch Butterfly');
+    });
+  });
+  describe('POST /api/butterflies', () => {
+    it('creates a butterfly', async () => {
+      const response = await fastify.inject({
+        method: 'POST',
+        url: '/api/butterflies',
+        payload: {
+          commonName: 'Monarch Butterfly',
+          species: 'Danaus plexippus',
+          article: 'https://en.wikipedia.org/wiki/Monarch_butterfly',
+        },
+      });
+      expect(response.statusCode).toBe(201);
+      const butterfly = JSON.parse(response.body);
+      expect(butterfly.commonName).toBe('Monarch Butterfly');
+    });
+  });
+  describe('POST /api/butterflies/:id/ratings', () => {
+    it('adds a rating to a butterfly', async () => {
+      const response = await fastify.inject({
+        method: 'POST',
+        url: '/api/butterflies/Hq4Rk_vOPMehRX2ar6LKX/ratings',
+        payload: {
+          rating: 4,
+          userId: '-9aAFuyNIkpSzRMNux2BQ',
+        },
+      });
+      expect(response.statusCode).toBe(201);
+      const rating = JSON.parse(response.body);
+      expect(rating.rating).toBe(4);
+      expect(rating.butterflyId).toBe('Hq4Rk_vOPMehRX2ar6LKX');
+      expect(rating.userId).toBe('-9aAFuyNIkpSzRMNux2BQ');
     });
   });
 });
