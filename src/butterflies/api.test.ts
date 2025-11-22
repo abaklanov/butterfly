@@ -88,6 +88,14 @@ describe('butterflies API', () => {
       const butterfly = JSON.parse(response.body);
       expect(butterfly.commonName).toBe('Monarch Butterfly');
     });
+
+    it('returns 400 for invalid id', async () => {
+      const response = await fastify.inject({
+        method: 'GET',
+        url: '/api/butterflies/ ',
+      });
+      expect(response.statusCode).toBe(400);
+    });
   });
   describe('POST /api/butterflies', () => {
     it('creates a butterfly', async () => {
