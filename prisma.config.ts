@@ -10,8 +10,6 @@ export default defineConfig({
     seed: 'tsx prisma/seed.ts',
   },
   datasource: {
-    // TODO: enable env variable
-    // url: env("DATABASE_URL"),
-    url: 'postgresql://postgres@localhost:5432/butterfly',
+    url: env('DATABASE_URL'),
   },
 });
