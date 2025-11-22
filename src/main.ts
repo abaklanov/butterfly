@@ -13,7 +13,7 @@ await app.register(import('@fastify/swagger-ui'), {
   routePrefix: '/documentation',
 });
 
-app.register(prismaPlugin);
+await app.register(prismaPlugin);
 
 app.register(butterfliesRoutes);
 app.register(usersRoutes);
