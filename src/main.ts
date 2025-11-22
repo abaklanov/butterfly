@@ -12,11 +12,11 @@ fastify.register(prismaPlugin);
 fastify.register(butterfliesRoutes);
 fastify.register(usersRoutes);
 
-fastify.get('/', async function () {
-  return { hello: 'suka' };
+fastify.get('/health-check', async function () {
+  return { hello: 'world' };
 });
 
-// TODO: use env variable for port
+// TODO: use env variable for port and address
 // TODO: separate server from app
 fastify.listen({ port: 3000, host: '0.0.0.0' }, function (err) {
   if (err) {
