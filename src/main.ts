@@ -4,25 +4,31 @@ import usersRoutes from './users/routes.js';
 import prismaPlugin from '../prisma/prismaPlugin.js';
 
 // TODO: add to env
-const fastify = Fastify({
+const app = Fastify({
   logger: true,
 });
 
-fastify.register(prismaPlugin);
+await app.register(import('@fastify/swagger'));
 
-fastify.register(butterfliesRoutes);
-fastify.register(usersRoutes);
+await app.register(import('@fastify/swagger-ui'), {
+  routePrefix: '/documentation',
+});
 
-fastify.get('/health-check', async function () {
+app.register(prismaPlugin);
+
+app.register(butterfliesRoutes);
+app.register(usersRoutes);
+
+app.get('/health-check', async function () {
   return { hello: 'world' };
 });
 
 // TODO: separate server from app
-fastify.listen(
+app.listen(
   { port: +process.env.SERVER_PORT, host: process.env.SERVER_HOST },
   function (err) {
     if (err) {
-      fastify.log.error(err);
+      app.log.error(err);
       process.exit(1);
     }
   },
