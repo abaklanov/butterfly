@@ -17,7 +17,6 @@ fastify.get('/health-check', async function () {
   return { hello: 'world' };
 });
 
-// TODO: use env variable for port and address
 // TODO: separate server from app
 fastify.listen(
   { port: +process.env.SERVER_PORT, host: process.env.SERVER_HOST },
