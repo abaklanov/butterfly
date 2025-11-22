@@ -67,6 +67,32 @@ async function main() {
   console.log({
     butterflies,
   });
+
+  console.log('Creating ratings...');
+  const ratings = await prisma.ratings.createMany({
+    data: [
+      {
+        id: '1',
+        butterflyId: 'Hq4Rk_vOPMehRX2ar6LKX',
+        userId: '-9aAFuyNIkpSzRMNux2BQ',
+        rating: 3,
+      },
+      {
+        id: '2',
+        butterflyId: 'H7hhcEWLDsxyHN0cnDrBV',
+        userId: '-9aAFuyNIkpSzRMNux2BQ',
+        rating: 5,
+      },
+      {
+        id: '3',
+        butterflyId: 'VJ5v4ZEQVL92XaaSl7xgD',
+        userId: '-9aAFuyNIkpSzRMNux2BQ',
+        rating: 4,
+      },
+    ],
+  });
+  console.log({ ratings });
+  console.log('Seeding finished.');
 }
 
 main()
