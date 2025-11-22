@@ -17,9 +17,11 @@ export async function createButterfly(data: {
 }
 
 export async function addButterflyRating(data: {
+  id: string;
   butterflyId: string;
   userId: string;
   rating: number;
 }) {
+  console.log('Adding rating:', data);
   return await this.prisma.ratings.create({ data });
 }

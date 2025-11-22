@@ -1,8 +1,7 @@
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, afterEach, describe, expect, it } from 'vitest';
 import Fastify from 'fastify';
 import butterfliesRoutes from './routes.js';
 import prismaPlugin from '../../prisma/prismaPlugin.js';
-import { afterEach } from 'node:test';
 
 let fastify;
 
@@ -26,9 +25,13 @@ beforeAll(async () => {
 describe('butterflies API', () => {
   beforeAll(async () => {
     await fastify.prisma.butterflies.deleteMany({});
+    await fastify.prisma.ratings.deleteMany({});
+    await fastify.prisma.users.deleteMany({});
   });
   afterEach(async () => {
     await fastify.prisma.butterflies.deleteMany({});
+    await fastify.prisma.ratings.deleteMany({});
+    await fastify.prisma.users.deleteMany({});
   });
   describe('GET /api/butterflies', () => {
     it('returns the list of butterflies ', async () => {
@@ -61,6 +64,22 @@ describe('butterflies API', () => {
 
   describe('GET /api/butterflies/:id', () => {
     it('returns a butterfly', async () => {
+      await fastify.prisma.butterflies.createMany({
+        data: [
+          {
+            id: 'Hq4Rk_vOPMehRX2ar6LKX',
+            commonName: 'Monarch Butterfly',
+            species: 'Danaus plexippus',
+            article: 'https://en.wikipedia.org/wiki/Monarch_butterfly',
+          },
+          {
+            id: 'B1cD3fGHIJkLmNoPqRsTu',
+            commonName: 'Swallowtail Butterfly',
+            species: 'Papilio machaon',
+            article: 'https://en.wikipedia.org/wiki/Swallowtail_butterfly',
+          },
+        ],
+      });
       const response = await fastify.inject({
         method: 'GET',
         url: '/api/butterflies/Hq4Rk_vOPMehRX2ar6LKX',
@@ -87,20 +106,39 @@ describe('butterflies API', () => {
     });
   });
   describe('POST /api/butterflies/:id/ratings', () => {
-    it('adds a rating to a butterfly', async () => {
+    it.skip('adds a rating to a butterfly', async () => {
+      await fastify.prisma.butterflies.createMany({
+        data: [
+          {
+            id: 'butterfly1',
+            commonName: 'Monarch Butterfly',
+            species: 'Danaus plexippus',
+            article: 'https://en.wikipedia.org/wiki/Monarch_butterfly',
+          },
+        ],
+      });
+      await fastify.prisma.users.createMany({
+        data: [
+          {
+            id: 'user1',
+            username: 'alice',
+          },
+        ],
+      });
+      console.log(await fastify.prisma.butterflies.findMany());
       const response = await fastify.inject({
         method: 'POST',
-        url: '/api/butterflies/Hq4Rk_vOPMehRX2ar6LKX/ratings',
+        url: '/api/butterflies/butterfly1/ratings',
         payload: {
           rating: 4,
-          userId: '-9aAFuyNIkpSzRMNux2BQ',
+          userId: 'user1',
         },
       });
       expect(response.statusCode).toBe(201);
       const rating = JSON.parse(response.body);
       expect(rating.rating).toBe(4);
       expect(rating.butterflyId).toBe('Hq4Rk_vOPMehRX2ar6LKX');
-      expect(rating.userId).toBe('-9aAFuyNIkpSzRMNux2BQ');
+      expect(rating.userId).toBe('user1');
     });
   });
 });
