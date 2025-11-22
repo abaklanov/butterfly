@@ -5,7 +5,7 @@ import prismaPlugin from '../prisma/prismaPlugin.js';
 
 // TODO: add to env
 const app = Fastify({
-  logger: true,
+  logger: Boolean(process.env.FASTIFY_LOGGER),
 });
 
 await app.register(import('@fastify/swagger'));
