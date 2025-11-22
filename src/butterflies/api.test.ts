@@ -135,6 +135,7 @@ describe('butterflies API', () => {
       expect(response.statusCode).toBe(400);
     });
   });
+
   describe('POST /api/butterflies/:id/ratings', () => {
     it.skip('adds a rating to a butterfly', async () => {
       await fastify.prisma.butterflies.createMany({
@@ -169,6 +170,17 @@ describe('butterflies API', () => {
       expect(rating.rating).toBe(4);
       expect(rating.butterflyId).toBe('Hq4Rk_vOPMehRX2ar6LKX');
       expect(rating.userId).toBe('user1');
+    });
+    it('returns 400 for invalid data', async () => {
+      const response = await fastify.inject({
+        method: 'POST',
+        url: '/api/butterflies/butterfly1/ratings',
+        payload: {
+          rating: 6,
+          userId: '',
+        },
+      });
+      expect(response.statusCode).toBe(400);
     });
   });
 });

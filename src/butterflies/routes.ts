@@ -38,7 +38,26 @@ const butterfliesRoutes: Fastify.FastifyPluginCallback = function (
       },
     },
   });
-  fastify.post('/api/butterflies/:id/ratings', handleAddButterflyRating);
+  fastify.post('/api/butterflies/:id/ratings', {
+    handler: handleAddButterflyRating,
+    schema: {
+      params: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', minLength: 1 },
+        },
+        required: ['id'],
+      },
+      body: {
+        type: 'object',
+        properties: {
+          userId: { type: 'string', minLength: 1 },
+          rating: { type: 'number', minimum: 1, maximum: 5 },
+        },
+        required: ['userId', 'rating'],
+      },
+    },
+  });
 
   done();
 };
