@@ -3,6 +3,7 @@ import butterfliesRoutes from './butterflies/routes.js';
 import usersRoutes from './users/routes.js';
 import prismaPlugin from '../prisma/prismaPlugin.js';
 
+// TODO: add to env
 const fastify = Fastify({
   logger: true,
 });
