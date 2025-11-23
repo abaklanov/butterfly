@@ -1,5 +1,11 @@
 ### Butterfly critique
 
+## How to start up
+> docker compose up --build
+
+Tests can be run on host machine 
+> npm run test
+
 ## The main goal 
 As per assignment, I made sure the application is extendable and scalable, hence the changes made to both the structure of the code and the choice of the stack and supplimentary tools. Decisions are made as per this project is going to live longer and grow into something big, that's why we need scalability.  
 

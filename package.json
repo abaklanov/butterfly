@@ -29,11 +29,9 @@
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -w -p tsconfig.json",
     "lint": "eslint .",
-    "test": "vitest run --config vitest.config.ts",
     "prettier": "prettier \"{src,__{tests}__}/**/*.{ts,mts}\" --config .prettierrc --write",
     "prettier:check": "prettier \"{src,__{tests}__}/**/*.{ts,mts}\" --config .prettierrc --check",
-    "test:watch": "vitest",
-    "migratetest": "dotenv -e .env.test -- prisma migrate dev && vitest watch --config vitest.config.ts",
+    "test": "dotenv -e .env.test -- prisma migrate dev && vitest watch --config vitest.config.ts",
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed"
   },
