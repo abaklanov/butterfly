@@ -29,13 +29,13 @@ afterAll(async () => {
 describe('butterflies API', () => {
   beforeAll(async () => {
     await fastify.prisma.butterflies.deleteMany({});
-    await fastify.prisma.ratings.deleteMany({});
     await fastify.prisma.users.deleteMany({});
+    await fastify.prisma.ratings.deleteMany({});
   });
   afterEach(async () => {
     await fastify.prisma.butterflies.deleteMany({});
-    await fastify.prisma.ratings.deleteMany({});
     await fastify.prisma.users.deleteMany({});
+    await fastify.prisma.ratings.deleteMany({});
   });
   describe('GET /api/butterflies', () => {
     it('returns the list of butterflies ', async () => {
@@ -172,7 +172,7 @@ describe('butterflies API', () => {
       expect(response.statusCode).toBe(201);
       const rating = JSON.parse(response.body);
       expect(rating.rating).toBe(4);
-      expect(rating.butterflyId).toBe('Hq4Rk_vOPMehRX2ar6LKX');
+      expect(rating.butterflyId).toBe('butterfly1');
       expect(rating.userId).toBe('user1');
     });
     it('returns 400 for invalid data', async () => {

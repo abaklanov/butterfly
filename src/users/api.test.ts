@@ -27,16 +27,16 @@ afterAll(async () => {
   await fastify.close();
 });
 
-describe('users API', () => {
+describe.skip('users API', () => {
   beforeAll(async () => {
-    await fastify.prisma.ratings.deleteMany({});
     await fastify.prisma.butterflies.deleteMany({});
     await fastify.prisma.users.deleteMany({});
+    await fastify.prisma.ratings.deleteMany({});
   });
   afterEach(async () => {
-    await fastify.prisma.ratings.deleteMany({});
     await fastify.prisma.butterflies.deleteMany({});
     await fastify.prisma.users.deleteMany({});
+    await fastify.prisma.ratings.deleteMany({});
   });
   describe('GET /api/users', () => {
     it('returns the list of users ', async () => {

@@ -1,5 +1,6 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 import { nanoid } from 'nanoid';
+import { fetchAllUsers } from './model.js';
 
 export const handleGetAllUsers = async function (_request, reply) {
   // TODO: validate request

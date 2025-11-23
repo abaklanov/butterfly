@@ -6,6 +6,7 @@ import {
 } from 'vitest/config';
 
 export default defineConfig(({ mode }) => ({
+  fileParallelism: false,
   test: {
     exclude: [...configDefaults.exclude, 'build/**/*'],
     coverage: {

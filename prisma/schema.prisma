@@ -35,6 +35,6 @@ model Ratings {
   butterflyId   String
   rating        Int
 
-  user          Users  @relation(fields: [userId], references: [id])
-  butterfly     Butterflies  @relation(fields: [butterflyId], references: [id])
+  user          Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  butterfly     Butterflies  @relation(fields: [butterflyId], references: [id], onDelete: Cascade)
 }
