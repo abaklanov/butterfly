@@ -22,7 +22,6 @@ export const fetchUserRatings = async function (id: string) {
       ratings: {
         orderBy: { rating: 'desc' },
         select: {
-          id: true,
           rating: true,
           butterfly: true,
         },

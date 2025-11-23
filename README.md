@@ -20,7 +20,7 @@ Initial project had some quite outdated libraries. That needed to be improved in
 There was version 18 mentioned in the assignment, but I went with v22. I was told it does not play a significant role specifically for the test. Considering all that, aiming for the later versions again allows for better security, availability of up-to-date libraries and functionality of Node itself.
 
 ## Boilerplate
-At this point I figured that the example app is way far away from what I want to use and what I feel the result service should look like. So I went for a boilerplate to speed up the process. This one had everything that I needed and configured (TS, ESM, Node 22 support, eslint, vitest): 
+At this point I figured that the example app is way far away from what I want to use and what I feel the result service should look like. So I went for a boilerplate to speed up the process. This one had everything that I needed and configured (TS, ESM, Node 22 support, eslint, vitest): https://github.com/jsynowiec/node-typescript-boilerplate
 
 ## DDD
 I noticed that initially, the API was implemented in one main file. That should be changed. I believe breaking the app down into domains is a better approach here. People instinctively understand what are those entities and where to look for their components. So, for instance, everything related to butterfly entity is collected in one folder, namely "src/butterflies"
@@ -41,6 +41,12 @@ On top of that, we we talk about users rating butterflies, I immediately think a
 When dealing with the db, I prefer to use ORM. I view it as a more safe and still flexible solution. We get basic protection from e.g. sql injections (whille of course need to keep an eye on custom queries). We get basic operations along with it, while we still can write pure sql for something complex. Here I went with Prisma ORM.
 
 ## Database structure
+There are two tables, naturally serving for the basic entities in the service: butterflies and users. Ratings is just a table referencing both of them and keeping a rating. The rating table has foreign keys and constraints. This is done for db consistency and cascading style of relation allows for easy entries management.
+
+DB model is described according to Prisma's approach in /prisma/schema.prisma
+
+## API endpoints verbs and URL format
+GET and POST verbs are used for fetching the data and creating new objects in the db accordingly. API URL convention is /<resource>/<id>/<sub-collection>. E.g. /users/123abc/ratings
 
 ## Testing runner choice
 
@@ -49,10 +55,13 @@ Vitest and esm based projects are friends. It works flawlessly with less configu
 A bonus is that it has GUI, which helps to visualise testing process.
 
 ## Container
+For better team work, better environment management and further cloud integration, containerization is important. I put everything into a docker container, which will allow to easily set everything up on other systems.
 
 ## Security
+API security is provided by Helmet library, which adds necessary headers automatically to ensure protection from some attacks on the API. However it's not full protection and some other steps ought to be taken. Like authorization and using bearer tokens for requests.
 
 ## Swagger
+A quick addition for better DX. Swagger and maybe even better to have Scalar UI, will help out with further development, e.g. the frontend side of the project.
 
 ## Potential improvements further
 
@@ -60,4 +69,8 @@ Of course, this service can grow way further. I can think of several potential i
 
 - Cloud implementation. I strongly believe employing infrastructure from cloud affects positively on the development and maintanence. This should be done.
 - GraphQL
+With cloud integration, and depending on the data structure, the latter can come from various sources. GraphQL might help out with easying out the process of gathering data in the frontend side. However the app might not get too complicated to switch.
 - Authentication/Authorization
+API with no authentication is prone for attacks or simple abuse. This is probably do with some cloud authenticator and bearer tokens.
+- Caching might help with frequent requests
+- Frontend part of the service can be made with React and Tanstack. The latter I'd use for Router and Query: set up frontend routing and sync backend and frontend data.

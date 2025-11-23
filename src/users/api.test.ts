@@ -166,13 +166,11 @@ describe('users API', () => {
       await fastify.prisma.ratings.createMany({
         data: [
           {
-            id: 'rating1',
             userId: 'user1',
             butterflyId: 'butterfly1',
             rating: 4,
           },
           {
-            id: 'rating2',
             userId: 'user1',
             butterflyId: 'butterfly2',
             rating: 5,
@@ -186,7 +184,7 @@ describe('users API', () => {
       expect(response.statusCode).toBe(200);
       const ratings = JSON.parse(response.body);
       expect(ratings.ratings.length).toBe(2);
-      expect(ratings.ratings[0].id).toBe('rating2');
+      expect(ratings.ratings[0].rating).toBe(5);
     });
 
     it("responses with 400 if there's incorrect user id", async () => {

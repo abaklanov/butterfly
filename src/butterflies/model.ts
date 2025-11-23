@@ -17,7 +17,6 @@ export async function createButterfly(data: {
 }
 
 export async function addButterflyRating(data: {
-  id: string;
   butterflyId: string;
   userId: string;
   rating: number;

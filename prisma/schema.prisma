@@ -30,11 +30,12 @@ model Butterflies {
 }
 
 model Ratings {
-  id            String  @id
   userId        String
   butterflyId   String
   rating        Int
 
   user          Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
   butterfly     Butterflies  @relation(fields: [butterflyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, butterflyId])
 }
