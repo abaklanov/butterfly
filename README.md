@@ -93,4 +93,6 @@ With cloud integration, and depending on the data structure, the latter can come
 - Authentication/Authorization
 API with no authentication is prone for attacks or simple abuse. This is probably do with some cloud authenticator and bearer tokens.
 - Caching might help with frequent requests
+- Configuration validation. .env files can be asserted against schema for better reliability
 - Frontend part of the service can be made with React and Tanstack. The latter I'd use for Router and Query: set up frontend routing and sync backend and frontend data.
+- frontend and backend DTOs/models can be syncronised through OpenAPI models with tools like Orval. This will make life easier for teams consistig of backend and forntend developers, or just to make sure be and fe has the same type safe DTOs when dealing with the same API but from different sides.
