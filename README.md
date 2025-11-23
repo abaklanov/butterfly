@@ -1,4 +1,4 @@
-### Butterfly critique
+# Butterfly critique
 
 ## How to start up
 > docker compose up --build
