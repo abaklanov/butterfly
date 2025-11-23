@@ -7,6 +7,8 @@ const app = Fastify({
   logger: Boolean(process.env.FASTIFY_LOGGER),
 });
 
+app.register(import('@fastify/helmet'));
+
 await app.register(import('@fastify/swagger'));
 
 await app.register(import('@fastify/swagger-ui'), {
