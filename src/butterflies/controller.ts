@@ -36,7 +36,6 @@ export const handleAddButterflyRating = async function (request, reply) {
     butterflyId: request.params.id,
     ...request.body,
   };
-  console.log(newRating);
   await addButterflyRating.call(this, newRating);
 
   reply.status(201).send(newRating);

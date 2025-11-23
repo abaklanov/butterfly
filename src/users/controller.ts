@@ -43,7 +43,10 @@ export const handleCreateUser = async function (request, reply) {
 };
 
 export const handleGetUserRatings = async function (request, reply) {
-  // TODO: check user id
   const user = await fetchUserRatings.call(this, request.params.id);
+  if (!user) {
+    reply.status(404).send({ message: 'User not found' });
+    return;
+  }
   reply.send(user);
 };
