@@ -17,7 +17,6 @@ beforeAll(async () => {
 
   fastify.listen(function (err) {
     if (err) {
-      console.log(err);
       fastify.log.error(err);
       process.exit(1);
     }
