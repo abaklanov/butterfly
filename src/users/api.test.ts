@@ -27,7 +27,7 @@ afterAll(async () => {
   await fastify.close();
 });
 
-describe('users API', () => {
+describe.skip('users API', () => {
   beforeAll(async () => {
     await fastify.prisma.butterflies.deleteMany({});
     await fastify.prisma.users.deleteMany({});

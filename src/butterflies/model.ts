@@ -21,5 +21,21 @@ export async function addButterflyRating(data: {
   userId: string;
   rating: number;
 }) {
-  return await this.prisma.ratings.create({ data });
+  const { userId, butterflyId, rating } = data;
+  return await this.prisma.ratings.upsert({
+    where: {
+      userId_butterflyId: {
+        userId,
+        butterflyId,
+      },
+    },
+    update: {
+      rating,
+    },
+    create: {
+      userId,
+      butterflyId,
+      rating,
+    },
+  });
 }

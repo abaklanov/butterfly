@@ -32,13 +32,12 @@ export const handleCreateButterfly = async function (request, reply) {
 
 export const handleAddButterflyRating = async function (request, reply) {
   // TODO: check user existance
-  // TODO: 400 on unique constraint
   const newRating = {
     butterflyId: request.params.id,
     ...request.body,
   };
   console.log(newRating);
-  addButterflyRating.call(this, newRating);
+  await addButterflyRating.call(this, newRating);
 
   reply.status(201).send(newRating);
 };

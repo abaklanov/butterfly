@@ -45,6 +45,8 @@ There are two tables, naturally serving for the basic entities in the service: b
 
 DB model is described according to Prisma's approach in /prisma/schema.prisma
 
+As a highlight, Ratings table has a unique constraint which leads to a certain way of dealing with it through ORM. Prisma allows for upsert() method that decided whether to update or create an entry depending on its existance in the database. Here it nicely integrates with the idea of users rating the butterflies and then changing their minds and correcting the amoiunt of stars they left after some time.
+
 ## API endpoints verbs and URL format
 GET and POST verbs are used for fetching the data and creating new objects in the db accordingly. API URL convention is /<resource>/<id>/<sub-collection>. E.g. /users/123abc/ratings
 

@@ -26,7 +26,7 @@ afterAll(async () => {
   await fastify.close();
 });
 
-describe.skip('butterflies API', () => {
+describe('butterflies API', () => {
   beforeAll(async () => {
     await fastify.prisma.butterflies.deleteMany({});
     await fastify.prisma.users.deleteMany({});
@@ -141,7 +141,7 @@ describe.skip('butterflies API', () => {
   });
 
   describe('POST /api/butterflies/:id/ratings', () => {
-    it.skip('adds a rating to a butterfly', async () => {
+    it('adds a rating to a butterfly', async () => {
       await fastify.prisma.butterflies.createMany({
         data: [
           {
@@ -171,6 +171,48 @@ describe.skip('butterflies API', () => {
       expect(response.statusCode).toBe(201);
       const rating = JSON.parse(response.body);
       expect(rating.rating).toBe(4);
+      expect(rating.butterflyId).toBe('butterfly1');
+      expect(rating.userId).toBe('user1');
+    });
+    it('adds a rating to a butterfly', async () => {
+      await fastify.prisma.butterflies.createMany({
+        data: [
+          {
+            id: 'butterfly1',
+            commonName: 'Monarch Butterfly',
+            species: 'Danaus plexippus',
+            article: 'https://en.wikipedia.org/wiki/Monarch_butterfly',
+          },
+        ],
+      });
+      await fastify.prisma.users.createMany({
+        data: [
+          {
+            id: 'user1',
+            username: 'alice',
+          },
+        ],
+      });
+      await fastify.prisma.ratings.createMany({
+        data: [
+          {
+            userId: 'user1',
+            butterflyId: 'butterfly1',
+            rating: 4,
+          },
+        ],
+      });
+      const response = await fastify.inject({
+        method: 'POST',
+        url: '/api/butterflies/butterfly1/ratings',
+        payload: {
+          rating: 5,
+          userId: 'user1',
+        },
+      });
+      expect(response.statusCode).toBe(201);
+      const rating = JSON.parse(response.body);
+      expect(rating.rating).toBe(5);
       expect(rating.butterflyId).toBe('butterfly1');
       expect(rating.userId).toBe('user1');
     });
