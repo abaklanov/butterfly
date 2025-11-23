@@ -26,16 +26,18 @@ afterAll(async () => {
   await fastify.close();
 });
 
+const dbCleanUp = async () => {
+  await fastify.prisma.butterflies.deleteMany({});
+  await fastify.prisma.users.deleteMany({});
+  await fastify.prisma.ratings.deleteMany({});
+};
+
 describe('butterflies API', () => {
   beforeAll(async () => {
-    await fastify.prisma.butterflies.deleteMany({});
-    await fastify.prisma.users.deleteMany({});
-    await fastify.prisma.ratings.deleteMany({});
+    dbCleanUp();
   });
   afterEach(async () => {
-    await fastify.prisma.butterflies.deleteMany({});
-    await fastify.prisma.users.deleteMany({});
-    await fastify.prisma.ratings.deleteMany({});
+    dbCleanUp();
   });
   describe('GET /api/butterflies', () => {
     it('returns the list of butterflies ', async () => {
