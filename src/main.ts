@@ -25,7 +25,10 @@ app.get('/health-check', async function () {
 });
 
 app.listen(
-  { port: +process.env.SERVER_PORT, host: process.env.SERVER_HOST },
+  {
+    port: +process.env.SERVER_PORT || 3000,
+    host: process.env.SERVER_HOST || '0.0.0.0',
+  },
   function (err) {
     if (err) {
       app.log.error(err);

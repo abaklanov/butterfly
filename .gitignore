@@ -31,4 +31,4 @@ build/
 #Databases
 /data
 /data-test
-/generated/prisma
+/prisma/generated

@@ -19,6 +19,7 @@ async function main() {
         username: 'metamorphosize_me',
       },
     ],
+    skipDuplicates: true,
   });
 
   console.log({ users });
@@ -63,6 +64,7 @@ async function main() {
         article: 'https://en.wikipedia.org/wiki/Myscelia_ethusa',
       },
     ],
+    skipDuplicates: true,
   });
   console.log({
     butterflies,
@@ -90,6 +92,7 @@ async function main() {
         rating: 4,
       },
     ],
+    skipDuplicates: true,
   });
   console.log({ ratings });
   console.log('Seeding finished.');

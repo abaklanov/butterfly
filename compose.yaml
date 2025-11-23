@@ -13,6 +13,11 @@ services:
       context: .
     environment:
       NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+      SERVER_PORT: ${SERVER_PORT}
+      SERVER_HOST: ${SERVER_HOST}
+    command: 
+      sh -c "npm run db:migrate && npm run db:seed && npm start"
     ports:
       - 3000:3000
   db:

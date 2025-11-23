@@ -31,6 +31,7 @@ export const handleCreateButterfly = async function (request, reply) {
 };
 
 export const handleAddButterflyRating = async function (request, reply) {
+  // TODO: check user existance
   const newRating = {
     id: nanoid(),
     butterflyId: request.params.id,
