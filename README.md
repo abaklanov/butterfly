@@ -9,18 +9,18 @@ Tests can be run on host machine
 ## The main goal 
 As per assignment, I made sure the application is extendable and scalable, hence the changes made to both the structure of the code and the choice of the stack and supplimentary tools. Decisions are made as per this project is going to live longer and grow into something big, that's why we need scalability.  
 
-Every single decision making about technology selected should be treated differently if this project was something else, e.g. if I was not the only one to make those decisions. Since we have to consider team's current knowledge and learning curves of potential new techs, limitations of the environment the service is going to be run, stage of the project. 
+Every single decision making about technology selected should be treated differently if this project was something else, e.g. if I was not the only one to make those decisions. In this case among other we have to consider team's current knowledge and learning curves of potential new techs, limitations of the environment the service is going to be run, stage of the project. 
 
-Since the app is quite small at the time I took the liverty of changing quite a lot. Basically rewriting it from scratch.
+Since the app is quite small at the time I took the liberty of changing quite a lot. Basically rewriting it from scratch.
 
 ## ESM vs CommonJS
 While the original assingment example had only CommonJs, I decided to go with ESM support only. This is not going to be a published library, which might lead to compatibility issues when used by wide audience. On the contrary, it's supposed to be a web service. In this case we can use modern features of ESM.
 
 ## Typescript
-Initial setup was with JS, and it might make sense in Node.js environment, as well as my previous remark on CommonJs modules. However I still prefer hop over some initial painful steps of configuring everything in a project, but then have a static typing check. I believe it still speeds up the process. 
+Initial setup was with JS, and it might make sense in Node.js environment, as well as my previous remark on CommonJs modules. However I still prefer to hop over some initial painful steps of configuring everything in a project, but then have a static typing check. I believe it still speeds up the process of a development of a reliable code. 
 
 ## Versions
-Initial project had some quite outdated libraries. That needed to be improved in order to make sure the security of the app is improved. Later versions tend to have less vulnarabilities
+Initial project had some quite outdated libraries. That needed to be changed in order to make sure the security of the app is improved. Later versions tend to have less vulnarabilities
 
 ## Node version
 There was version 18 mentioned in the assignment, but I went with v22. I was told it does not play a significant role specifically for the test. Considering all that, aiming for the later versions again allows for better security, availability of up-to-date libraries and functionality of Node itself.
@@ -37,7 +37,7 @@ Stemming from MVC approach, while not having views, this should work quite nicel
 The main idea behind it is separation of concern. It allows for better code readability, it's less prone to errors when some parts are changed, leaving others intact.
 
 ## Fastify vs Express
-This has been tweaked as well. While express was introduced initially, I found Fastify a better option, not only because its speed, but plugin system and ability to separate concerns and use it somewhat as DI container, should warrant a better extendability of the service. 
+This has been tweaked as well. While express was introduced initially, I found Fastify a better option, not only because of its speed, but plugin system and ability to separate concerns and use it somewhat as DI container, should warrant a better extendability of the service. 
 
 ## Database engine and ORM
 While lowdb initially was set in the example, I find this as not well sustainable solution. JSON-based approach might quickly get laggy when the database grows in size. With multiple users online, problems with consistency of the db might arise. 
@@ -46,8 +46,10 @@ On top of that, we we talk about users rating butterflies, I immediately think a
 
 When dealing with the db, I prefer to use ORM. I view it as a more safe and still flexible solution. We get basic protection from e.g. sql injections (whille of course need to keep an eye on custom queries). We get basic operations along with it, while we still can write pure sql for something complex. Here I went with Prisma ORM.
 
+The choice of the tool also dictated by the necessity of having migrations, which Prisma provides support for. Migrations will help with the consistency of the db across environments and helps the team to be on the same page every time there's a change to the db structure.
+
 ## Database structure
-There are two tables, naturally serving for the basic entities in the service: butterflies and users. Ratings is just a table referencing both of them and keeping a rating. The rating table has foreign keys and constraints. This is done for db consistency and cascading style of relation allows for easy entries management.
+There are two tables, naturally serving for the basic entities in the service: butterflies and users. The third, Ratings is just a table referencing both of them and keeping a rating. The rating table has foreign keys and constraints. This is done for db consistency and cascading style of relation allows for easy entries management.
 
 DB model is described according to Prisma's approach in /prisma/schema.prisma
 
