@@ -14,7 +14,7 @@ beforeAll(async () => {
   await fastify.register(prismaPlugin);
   fastify.register(butterfliesRoutes);
 
-  fastify.listen({ port: process.env.SERVER_PORT }, function (err) {
+  fastify.listen(function (err) {
     if (err) {
       console.log(err);
       fastify.log.error(err);
