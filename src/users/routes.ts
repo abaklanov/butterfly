@@ -36,7 +36,18 @@ const usersRoutes: Fastify.FastifyPluginCallback = function (
       },
     },
   });
-  fastify.get('/api/users/:id/ratings', { handler: handleGetUserRatings });
+  fastify.get('/api/users/:id/ratings', {
+    handler: handleGetUserRatings,
+    schema: {
+      params: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', minLength: 1 },
+        },
+        required: ['id'],
+      },
+    },
+  });
 
   done();
 };

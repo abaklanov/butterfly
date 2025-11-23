@@ -27,7 +27,7 @@ afterAll(async () => {
   await fastify.close();
 });
 
-describe.skip('users API', () => {
+describe('users API', () => {
   beforeAll(async () => {
     await fastify.prisma.butterflies.deleteMany({});
     await fastify.prisma.users.deleteMany({});
@@ -187,6 +187,14 @@ describe.skip('users API', () => {
       const ratings = JSON.parse(response.body);
       expect(ratings.ratings.length).toBe(2);
       expect(ratings.ratings[0].id).toBe('rating2');
+    });
+
+    it("responses with 400 if there's incorrect user id", async () => {
+      const response = await fastify.inject({
+        method: 'GET',
+        url: '/api/users//ratings',
+      });
+      expect(response.statusCode).toBe(400);
     });
   });
 });

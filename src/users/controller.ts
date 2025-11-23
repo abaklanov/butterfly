@@ -1,17 +1,19 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 import { nanoid } from 'nanoid';
-import { fetchAllUsers } from './model.js';
+import {
+  fetchAllUsers,
+  fetchUserById,
+  createUser,
+  fetchUserRatings,
+} from './model.js';
 
 export const handleGetAllUsers = async function (_request, reply) {
-  // TODO: validate request
-  const users = await this.prisma.users.findMany();
+  const users = await fetchAllUsers.call(this);
   reply.send(users);
 };
 
 export const handleGetUserById = async function (request, reply) {
-  const user = await this.prisma.users.findFirst({
-    where: { id: request.params.id },
-  });
+  const user = await fetchUserById.call(this, request.params.id);
   if (!user) {
     reply.status(404).send({ message: 'User not found' });
     return;
@@ -25,7 +27,7 @@ export const handleCreateUser = async function (request, reply) {
     ...request.body,
   };
   try {
-    await this.prisma.users.create({ data: newUser });
+    await createUser.call(this, newUser);
   } catch (e) {
     if (e instanceof PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {
@@ -41,21 +43,6 @@ export const handleCreateUser = async function (request, reply) {
 };
 
 export const handleGetUserRatings = async function (request, reply) {
-  //TODO: validate request params
-  // TODO: validate body
-  // TODO: handle not found
-  const user = await this.prisma.users.findFirst({
-    where: { id: request.params.id },
-    include: {
-      ratings: {
-        orderBy: { rating: 'desc' },
-        select: {
-          id: true,
-          rating: true,
-          butterfly: true,
-        },
-      },
-    },
-  });
+  const user = await fetchUserRatings.call(this, request.params.id);
   reply.send(user);
 };
