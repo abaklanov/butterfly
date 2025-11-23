@@ -47,6 +47,11 @@ DB model is described according to Prisma's approach in /prisma/schema.prisma
 
 As a highlight, Ratings table has a unique constraint which leads to a certain way of dealing with it through ORM. Prisma allows for upsert() method that decided whether to update or create an entry depending on its existance in the database. Here it nicely integrates with the idea of users rating the butterflies and then changing their minds and correcting the amoiunt of stars they left after some time.
 
+Speaking of constraints. This is one of the reasons why I decided to go with a test db instead of mocking. A working db might help testing its functionalities like keys violations, which might be close to impossible with just mocking.
+
+## Testing
+I pay specific attention to integration testing. Both in backend and frontend. So the tests here contain primalrily integration tests of the api endpoints. How they response in different use cases.
+
 ## API endpoints verbs and URL format
 GET and POST verbs are used for fetching the data and creating new objects in the db accordingly. API URL convention is /<resource>/<id>/<sub-collection>. E.g. /users/123abc/ratings
 
@@ -59,11 +64,16 @@ A bonus is that it has GUI, which helps to visualise testing process.
 ## Container
 For better team work, better environment management and further cloud integration, containerization is important. I put everything into a docker container, which will allow to easily set everything up on other systems.
 
+When firing up the container, it will set up a server and two databases: one live and another for testing purposes.
+
 ## Security
 API security is provided by Helmet library, which adds necessary headers automatically to ensure protection from some attacks on the API. However it's not full protection and some other steps ought to be taken. Like authorization and using bearer tokens for requests.
 
 ## Swagger
 A quick addition for better DX. Swagger and maybe even better to have Scalar UI, will help out with further development, e.g. the frontend side of the project.
+
+## Eslint and prettier
+I pay attention to code appearance. It hsould be well structured, minimally commented and look neat. Prettier helps with initial clean up and formatting. Eslint is always used and helps to make sure we are on the same page with the team in terms of code practices
 
 ## Potential improvements further
 

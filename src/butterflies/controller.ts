@@ -1,3 +1,4 @@
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 import { nanoid } from 'nanoid';
 import {
   addButterflyRating,
@@ -31,12 +32,21 @@ export const handleCreateButterfly = async function (request, reply) {
 };
 
 export const handleAddButterflyRating = async function (request, reply) {
-  // TODO: check user existance
   const newRating = {
     butterflyId: request.params.id,
     ...request.body,
   };
-  await addButterflyRating.call(this, newRating);
+  try {
+    await addButterflyRating.call(this, newRating);
+  } catch (e) {
+    if (e instanceof PrismaClientKnownRequestError) {
+      if (e.code === 'P2003') {
+        console.log('Either butterfly or user do not exist');
+        reply.status(400);
+      }
+    }
+    throw e;
+  }
 
   reply.status(201).send(newRating);
 };

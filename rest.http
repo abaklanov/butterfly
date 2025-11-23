@@ -17,7 +17,7 @@ content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/butterflies/Hq4Rk_vOPMehRX2ar6LKX/ratings
+POST http://localhost:3000/api/butterflies/Hq4Rk_vOPMehRX2ar6LK/ratings
 content-Type: application/json
 
 {

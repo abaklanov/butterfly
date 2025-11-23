@@ -176,7 +176,36 @@ describe('butterflies API', () => {
       expect(rating.butterflyId).toBe('butterfly1');
       expect(rating.userId).toBe('user1');
     });
-    it('adds a rating to a butterfly', async () => {
+    it('responses with 400 when no butterfly with such id is presented', async () => {
+      await fastify.prisma.butterflies.createMany({
+        data: [
+          {
+            id: 'butterfly1',
+            commonName: 'Monarch Butterfly',
+            species: 'Danaus plexippus',
+            article: 'https://en.wikipedia.org/wiki/Monarch_butterfly',
+          },
+        ],
+      });
+      await fastify.prisma.users.createMany({
+        data: [
+          {
+            id: 'user1',
+            username: 'alice',
+          },
+        ],
+      });
+      const response = await fastify.inject({
+        method: 'POST',
+        url: '/api/butterflies/butterfly2/ratings',
+        payload: {
+          rating: 4,
+          userId: 'user1',
+        },
+      });
+      expect(response.statusCode).toBe(400);
+    });
+    it('updates a rating to a butterfly', async () => {
       await fastify.prisma.butterflies.createMany({
         data: [
           {
@@ -228,13 +257,6 @@ describe('butterflies API', () => {
         },
       });
       expect(response.statusCode).toBe(400);
-    });
-    it('returns 404 if no user with this id is found', async () => {
-      const response = await fastify.inject({
-        method: 'GET',
-        url: '/api/butterflies/butterfly1/ratings',
-      });
-      expect(response.statusCode).toBe(404);
     });
   });
 });

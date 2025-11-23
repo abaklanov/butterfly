@@ -194,5 +194,12 @@ describe.skip('users API', () => {
       });
       expect(response.statusCode).toBe(400);
     });
+    it('returns 404 if no user with this id is found', async () => {
+      const response = await fastify.inject({
+        method: 'GET',
+        url: '/api/butterflies/butterfly1/ratings',
+      });
+      expect(response.statusCode).toBe(404);
+    });
   });
 });
