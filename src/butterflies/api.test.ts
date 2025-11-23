@@ -160,7 +160,6 @@ describe.skip('butterflies API', () => {
           },
         ],
       });
-      console.log(await fastify.prisma.butterflies.findMany());
       const response = await fastify.inject({
         method: 'POST',
         url: '/api/butterflies/butterfly1/ratings',

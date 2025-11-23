@@ -22,6 +22,5 @@ export async function addButterflyRating(data: {
   userId: string;
   rating: number;
 }) {
-  console.log('Adding rating:', data);
   return await this.prisma.ratings.create({ data });
 }

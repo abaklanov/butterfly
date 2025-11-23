@@ -12,9 +12,7 @@ export const handleGetButterfly = async function (_request, reply) {
 };
 
 export const handleGetButterflyById = async function (request, reply) {
-  console.log(request.params.id);
   const butterfly = await fetchButterflyById.call(this, request.params.id);
-  console.log(butterfly);
   if (!butterfly) {
     reply.status(404).send({ message: 'Butterfly not found' });
     return;
