@@ -1,4 +1,4 @@
-import { beforeAll, afterEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, afterEach, describe, expect, it } from 'vitest';
 import Fastify from 'fastify';
 import butterfliesRoutes from './routes.js';
 import prismaPlugin from '../../prisma/prismaPlugin.js';
@@ -16,10 +16,15 @@ beforeAll(async () => {
 
   fastify.listen({ port: process.env.SERVER_PORT }, function (err) {
     if (err) {
+      console.log(err);
       fastify.log.error(err);
       process.exit(1);
     }
   });
+});
+
+afterAll(async () => {
+  await fastify.close();
 });
 
 describe('butterflies API', () => {

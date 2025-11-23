@@ -12,9 +12,31 @@ const usersRoutes: Fastify.FastifyPluginCallback = function (
   done,
 ) {
   fastify.get('/api/users', handleGetAllUsers);
-  fastify.get('/api/users/:id', handleGetUserById);
-  fastify.post('/api/users', handleCreateUser);
-  fastify.get('/api/users/:id/ratings', handleGetUserRatings);
+  fastify.get('/api/users/:id', {
+    handler: handleGetUserById,
+    schema: {
+      params: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', minLength: 1 },
+        },
+        required: ['id'],
+      },
+    },
+  });
+  fastify.post('/api/users', {
+    handler: handleCreateUser,
+    schema: {
+      body: {
+        type: 'object',
+        properties: {
+          username: { type: 'string', minLength: 1 },
+        },
+        required: ['username'],
+      },
+    },
+  });
+  fastify.get('/api/users/:id/ratings', { handler: handleGetUserRatings });
 
   done();
 };

@@ -1,3 +1,4 @@
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 import { nanoid } from 'nanoid';
 
 export const handleGetAllUsers = async function (_request, reply) {
@@ -7,23 +8,34 @@ export const handleGetAllUsers = async function (_request, reply) {
 };
 
 export const handleGetUserById = async function (request, reply) {
-  // TODO: validate request params
-  // TODO: handle not found
   const user = await this.prisma.users.findFirst({
     where: { id: request.params.id },
   });
+  if (!user) {
+    reply.status(404).send({ message: 'User not found' });
+    return;
+  }
   reply.send(user);
 };
 
 export const handleCreateUser = async function (request, reply) {
-  // TODO: validate request body and return proper response
-  // TODO: avoid duplicate usernames
-  // TODO: validate username rules (e.g. length, characters)
   const newUser = {
     id: nanoid(),
     ...request.body,
   };
-  await this.prisma.users.create({ data: newUser });
+  try {
+    await this.prisma.users.create({ data: newUser });
+  } catch (e) {
+    if (e instanceof PrismaClientKnownRequestError) {
+      if (e.code === 'P2002') {
+        console.log(
+          'There is a unique constraint violation, a new user cannot be created with this username',
+        );
+        reply.status(400);
+      }
+    }
+    throw e;
+  }
   reply.status(201).send(newUser);
 };
 
