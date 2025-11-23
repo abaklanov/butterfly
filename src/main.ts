@@ -22,7 +22,6 @@ app.get('/health-check', async function () {
   return { hello: 'world' };
 });
 
-// TODO: separate server from app
 app.listen(
   { port: +process.env.SERVER_PORT, host: process.env.SERVER_HOST },
   function (err) {
