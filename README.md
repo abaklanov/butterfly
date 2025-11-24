@@ -6,6 +6,7 @@ For the initial build
 
 or
 > docker compose build --no-cache
+
 > docker compose up
 
 Afterwards it's enough to go with 
@@ -78,7 +79,7 @@ Speaking of constraints. This is one of the reasons why I decided to go with a t
 I pay specific attention to integration testing. Both in backend and frontend. So the tests here contain primalrily integration tests of the api endpoints. How they response in different use cases.
 
 ## API endpoints verbs and URL format
-GET and POST verbs are used for fetching the data and creating new objects in the db accordingly. API URL convention is /<resource>/<id>/<sub-collection>. E.g. /users/123abc/ratings
+GET and POST verbs are used for fetching the data and creating new objects in the db accordingly. API URL convention is /resource/id/sub-collection. E.g. /users/123abc/ratings
 
 ## Testing runner choice
 
