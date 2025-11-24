@@ -20,8 +20,11 @@ http://localhost:3000/documentation#/
 
 Tests can be run on host machine 
 > npm i
+
 > npm run build
+
 > npx prisma generate
+
 > npm run test
 
 ## The main goal 
