@@ -1,9 +1,26 @@
 # Butterfly critique
 
 ## How to start up
+For the initial build
 > docker compose up --build
 
+or
+> docker compose build --no-cache
+> docker compose up
+
+Afterwards it's enough to go with 
+> docker compose up 
+
+API should be available at
+http://localhost:3000
+
+Swagger is at
+http://localhost:3000/documentation#/
+
 Tests can be run on host machine 
+> npm i
+> npm run build
+> npx prisma generate
 > npm run test
 
 ## The main goal 
