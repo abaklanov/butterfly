@@ -2,15 +2,20 @@
 
 ## How to start up
 For the initial build
-> docker compose up --build
+```
+docker compose up --build
+```
 
 or
-> docker compose build --no-cache
-
-> docker compose up
+```
+docker compose build --no-cache
+docker compose up
+```
 
 Afterwards it's enough to go with 
-> docker compose up 
+```
+docker compose up
+```
 
 API should be available at
 http://localhost:3000
@@ -19,13 +24,12 @@ Swagger is at
 http://localhost:3000/documentation#/
 
 Tests can be run on host machine 
-> npm i
-
-> npm run build
-
-> npx prisma generate
-
-> npm run test
+```
+npm i
+npm run build
+npx prisma generate
+npm run test
+```
 
 ## The main goal 
 As per assignment, I made sure the application is extendable and scalable, hence the changes made to both the structure of the code and the choice of the stack and supplimentary tools. Decisions are made as per this project is going to live longer and grow into something big, that's why we need scalability.  
